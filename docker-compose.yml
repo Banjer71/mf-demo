@@ -1,0 +1,43 @@
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./auth-backend
+    image: banjer/auth-backend
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/fingerprintapp
+    depends_on:
+      - mongo
+
+  host:
+    build: ./host
+    image: banjer/host-app
+    ports:
+      - "3000:3000"
+
+  remote:
+    build: ./remote
+    image: banjer/remote-app
+    ports:
+      - "3001:3001"
+
+  nginx:
+    build: ./nginx
+    image: banjer/nginx-proxy
+    ports:
+      - "80:80"
+    depends_on:
+      - host
+      - remote
+      - backend
+
+volumes:
+  mongo-data:
