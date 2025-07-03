@@ -12,3 +12,14 @@ This project is a full-stack microfrontend demo using WebAuthn for fingerprint o
 
 ## 🗂 Project Structure
 
+host/ # Host React App
+remote/ # Remote React App
+auth-backend/ # Express backend with WebAuthn
+nginx/ # NGINX reverse proxy
+docker-compose.yml
+
+🗃 MongoDB
+MongoDB runs as a container and stores data in a local Docker volume.
+
+🔐 Auth
+Supports WebAuthn with fingerprint or PIN registration and login.
